@@ -1,0 +1,4 @@
+.hexmap, 
+svg#map-holder-svg {
+  overflow:hidden;
+}
