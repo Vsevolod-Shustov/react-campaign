@@ -7,46 +7,93 @@ class Hexmap extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      svgWidth: 0,
+      svgHeight: 0,
       hexes: [
-      {"x": 0, "y": 0, "terrain": "plains"}
+      {"x": 0, "y": 0, "terrain": "plains"},
+      {"x": 1, "y": 0, "terrain": "forest"}
       ]
     };
     this.updateDimensions = this.updateDimensions.bind(this);
-    this.svgWidth = window.innerWidth;
-    this.svgHeight = window.innerHeight;
+    //this.svgWidth = window.innerWidth;
+    //this.svgHeight = window.innerHeight;
   }
   
 
     
   updateDimensions() {
+    console.log("the window had been resized");
+    //this.svgWidth = window.innerWidth;
+    //this.svgHeight = window.innerHeight;
+    //this.forceUpdate();
+    //this.setState({ svgWidth: window.innerWidth });
+    //this.setState({ svgHeight: window.innerHeight });
+    this.setState({ svgWidth: window.innerWidth });
+    this.setState({ svgHeight: window.innerHeight });
+  }
+  
+  positionMap(){
+    console.log('positioning the map...');
+    let mapholder = document.getElementById("map-holder-g");
+    let svg = document.getElementById("map-holder-svg");
+    let svgComputedStyles = window.getComputedStyle(svg);
+    //position top left corner of the map to top left corner of svg
+    let mapXresetPos = mapholder.getBBox().x;
+    console.log("getBBox X is "+mapXresetPos);
+    mapXresetPos*=-1;
+    let mapYresetPos = mapholder.getBBox().y;
+    console.log("getBBox Y is "+mapYresetPos);
+    mapYresetPos*=-1;
+    //mapholder.attribute("transform", "translate("+mapXresetPos+","+mapYresetPos+")");
+
+    //center the map
+    let mapXpos = (parseInt(svgComputedStyles.getPropertyValue("width")) - mapholder.getBBox().width)/2;
+    console.log(svgComputedStyles.getPropertyValue("width"));
+    mapXpos = mapXpos + mapXresetPos;
+    let mapYpos = (parseInt(svgComputedStyles.getPropertyValue("height")) - mapholder.getBBox().height)/2;
+    mapYpos = mapYpos + mapYresetPos;
     
+    mapholder.setAttribute("transform", "translate("+mapXpos+","+mapYpos+")"); //console.log(document.getElementById("map-holder-g").getBBox());
+    /*if(scope.firstload == true) {
+      mapholder.attribute("transform", "translate("+mapXpos+","+mapYpos+")");
+    } else {
+      mapholder.transition(500).attribute("transform", "translate("+mapXpos+","+mapYpos+")");
+    };*/
+  }
+  
+  componentWillMount() {
+    this.updateDimensions();
+  }
+  
+  componentDidMount() {
+    window.addEventListener("resize", this.updateDimensions);
+    this.positionMap();
+  }
+  
+  componentDidUpdate() {
+    this.positionMap();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions);
   }
   
   render() {
-  
-    //hex graphics dimensions
-    let hexWidth = 150;
-    let hexHeight = 2*hexWidth/Math.sqrt(3);
-    let hexSideLength = hexHeight*Math.sin(Math.PI/6);
-    let hexVerticalOffset = (hexHeight-hexSideLength)/2;
-    let hexMargin = 4;
-    //let hexVerticalOffset = hexVerticalOffset + hexMargin;
     
-    //hex polygon points
-    let hexagon = [
-      {"x":hexWidth/2, "y":0},
-      {"x":hexWidth, "y":(hexHeight-hexSideLength)/2},
-      {"x":hexWidth, "y":hexHeight/2+(hexHeight-hexSideLength)/2},
-      {"x":hexWidth/2, "y":hexHeight},
-      {"x":0, "y":hexHeight/2+(hexHeight-hexSideLength)/2},
-      {"x":0, "y":(hexHeight-hexSideLength)/2}
-    ];
         
-    let renderedHexes = this.state.hexes.map((hex) => <Hex x={hex.x} y={hex.y} terrain={hex.terrain} />);
+    let renderedHexes = this.state.hexes.map((hex) =>
+      <Hex
+        x={hex.x}
+        y={hex.y}
+        terrain={hex.terrain}
+        
+      />);
     return (
       <div className="hexmap">
-        <svg width={this.svgWidth} height={this.svgHeight} id="map-holder-svg">
-          {renderedHexes}
+        <svg width={this.state.svgWidth} height={this.state.svgHeight} id="map-holder-svg">
+          <g id="map-holder-g" transform="translate(0,0)">
+            {renderedHexes}
+          </g>
         </svg>
       </div>
     );
