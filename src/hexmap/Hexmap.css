@@ -1,3 +1,9 @@
 body {
   overflow:hidden;
 }
+#map-holder-g {
+  cursor:grab;
+}
+#map-holder-g:active {
+  cursor:grabbing;
+}

@@ -11,7 +11,12 @@ class Hexmap extends Component {
       svgHeight: 0,
       hexes: [
       {"x": 0, "y": 0, "terrain": "plains"},
-      {"x": 1, "y": 0, "terrain": "forest"}
+      {"x": -1, "y": 0, "terrain": "plains"},
+      {"x": 1, "y": 0, "terrain": "plains"},
+      {"x": 0, "y": -1, "terrain": "forest"},
+      {"x": -1, "y": -1, "terrain": "swamp"},
+      {"x": 0, "y": 1, "terrain": "hills"},
+      {"x": -1, "y": 1, "terrain": "mountain"},
       ]
     };
     this.updateDimensions = this.updateDimensions.bind(this);
@@ -61,6 +66,20 @@ class Hexmap extends Component {
     };*/
   }
   
+  dragmove() {
+    let mapholder = document.getElementById("map-holder-g");
+    //get transform
+    var xforms = mapholder.transform.baseVal; // An SVGTransformList
+    var firstXForm = xforms.getItem(0);       // An SVGTransform
+    if (firstXForm.type === SVGTransform.SVG_TRANSFORM_TRANSLATE){
+      var firstX = firstXForm.matrix.e,
+          firstY = firstXForm.matrix.f;
+    }
+    let xmove = firstX + d3.event.dx;
+    let ymove = firstY + d3.event.dy;
+    mapholder.setAttribute('transform', 'translate('+xmove+','+ymove+')');
+  };
+  
   componentWillMount() {
     this.updateDimensions();
   }
@@ -68,6 +87,10 @@ class Hexmap extends Component {
   componentDidMount() {
     window.addEventListener("resize", this.updateDimensions);
     this.positionMap();
+    
+    let drag = d3.drag().on("drag", this.dragmove);
+    d3.select("#map-holder-g")
+      .call(drag);
   }
   
   componentDidUpdate() {
