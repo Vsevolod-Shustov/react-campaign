@@ -6,3 +6,9 @@ body {
   font-size:16px;
   font-family:verdana, sans-serif;
 }
+
+.HexEditMenu {
+  position:fixed;
+  top:8px;
+  right:8px;
+}
