@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import * as d3 from 'd3';
 import './Hexmap.css';
 import Hex from '../hex/Hex.js';
+import { connect } from "react-redux";
 
 class Hexmap extends Component {
   constructor(props) {
@@ -88,7 +89,7 @@ class Hexmap extends Component {
         x={hex.x}
         y={hex.y}
         terrain={hex.terrain}
-        
+        key={hex.x + " " + hex.y}
       />);
     return (
       <div className="hexmap">
