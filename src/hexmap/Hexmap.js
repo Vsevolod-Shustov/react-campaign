@@ -62,6 +62,14 @@ class Hexmap extends Component {
     mapholder.setAttribute('transform', 'translate('+xmove+','+ymove+')');
   }
   
+  addHex() {
+  
+  }
+  
+  removeHex() {
+  
+  }
+  
   componentWillMount() {
     this.updateDimensions();
   }
@@ -76,7 +84,7 @@ class Hexmap extends Component {
   }
   
   componentDidUpdate() {
-    this.positionMap();
+    //this.positionMap();
   }
 
   componentWillUnmount() {
@@ -84,13 +92,17 @@ class Hexmap extends Component {
   }
   
   render() {
-    let renderedHexes = this.state.hexes.map((hex) =>
-      <Hex
-        x={hex.x}
-        y={hex.y}
-        terrain={hex.terrain}
-        key={hex.x + " " + hex.y}
-      />);
+    if(this.props.hexes && this.props.hexes.map){
+      var renderedHexes = this.props.hexes.map((hex) =>
+        <Hex
+          x={hex.x}
+          y={hex.y}
+          terrain={hex.terrain}
+          key={hex.x + " " + hex.y}
+        />);
+    } else {
+      console.log("no state found by hexmap");
+    }
     return (
       <div className="hexmap">
         <svg width={this.state.svgWidth} height={this.state.svgHeight} id="map-holder-svg">
@@ -103,4 +115,13 @@ class Hexmap extends Component {
   }
 }
 
-export default Hexmap;
+function mapStateToProps(state) {
+  console.log("mapping state to props...");
+  console.log("state is " + JSON.stringify(state));
+  return {
+    hexes: state.hex.hexes
+  };
+}
+
+//export default Hexmap;
+export default connect(mapStateToProps)(Hexmap);
