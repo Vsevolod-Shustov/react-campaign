@@ -44,7 +44,7 @@ class HexEditMenu extends Component {
             onClick={handleSubmit(values => 
               this.props.onSubmit({ 
                 ...values,
-                action: 'addHex'
+                action: 'ADD_HEX'
               }))}
           >Add Hex</button>
 
@@ -54,7 +54,7 @@ class HexEditMenu extends Component {
             onClick={handleSubmit(values => 
               this.props.onSubmit({ 
                 ...values,
-                action: 'saveMap'
+                action: 'SAVE_MAP'
               }))}
           >Save Map Data</button>
           
@@ -62,7 +62,7 @@ class HexEditMenu extends Component {
             onClick={handleSubmit(values => 
               this.props.onSubmit({ 
                 ...values,
-                action: 'loadMap'
+                action: 'LOAD_MAP'
               }))}
           >Load Map</button>
           
@@ -70,7 +70,7 @@ class HexEditMenu extends Component {
             onClick={handleSubmit(values => 
               this.props.onSubmit({ 
                 ...values,
-                action: 'deleteHex'
+                action: 'DELETE_HEX'
               }))}
           >Delete Hex</button>
           
@@ -78,7 +78,7 @@ class HexEditMenu extends Component {
             onClick={handleSubmit(values => 
               this.props.onSubmit({ 
                 ...values,
-                action: 'clearMap'
+                action: 'CLEAR_MAP'
               }))}
           >Clear Map</button>
           
@@ -86,7 +86,7 @@ class HexEditMenu extends Component {
             onClick={handleSubmit(values => 
               this.props.onSubmit({ 
                 ...values,
-                action: 'clearSave'
+                action: 'CLEAR_SAVE'
               }))}
           >Clear Save Data</button>
         </div>

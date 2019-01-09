@@ -2,11 +2,19 @@ import React, { Component } from 'react';
 import './App.css';
 import Hexmap from './hexmap/Hexmap.js';
 import HexEditMenu from './hexeditmenu/HexEditMenu.js';
+import { connect } from 'react-redux';
 
 class App extends Component {
   handleSubmit = (values) => {
-    // Do something with the form values
-    console.log(values);
+    console.log("values: " + JSON.stringify(values));
+    let action = {
+      type: values.action,
+      "x": values.x,
+      "y": values.y,
+      "terrain": values.terrain
+    };
+    console.log("action: " + JSON.stringify(action));
+    this.props.dispatch(action);
   }
   render() {
     return (
@@ -20,4 +28,5 @@ class App extends Component {
   }
 }
 
-export default App;
+//export default App;
+export default connect()(App);

@@ -98,7 +98,7 @@ class Hexmap extends Component {
           x={hex.x}
           y={hex.y}
           terrain={hex.terrain}
-          key={hex.x + " " + hex.y}
+          key={hex.key}
         />);
     } else {
       console.log("no state found by hexmap");
@@ -116,10 +116,10 @@ class Hexmap extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log("mapping state to props...");
-  console.log("state is " + JSON.stringify(state));
+  //console.log("mapping state to props...");
+  //console.log("state is " + JSON.stringify(state));
   return {
-    hexes: state.hex.hexes
+    hexes: state.hexes.hexes
   };
 }
 

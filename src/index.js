@@ -11,45 +11,43 @@ import {reducer as formReducer} from 'redux-form';
 
 const initialState = {
   hexes: [
-    {"x": 0, "y": 0, "terrain": "plains"},
-    {"x": -1, "y": 0, "terrain": "plains"},
-    {"x": 1, "y": 0, "terrain": "plains"},
-    {"x": 0, "y": -1, "terrain": "forest"},
-    {"x": -1, "y": -1, "terrain": "swamp"},
-    {"x": 0, "y": 1, "terrain": "hills"},
-    {"x": -1, "y": 1, "terrain": "mountain"},
+    {"key": "0 0", "x": 0, "y": 0, "terrain": "plains"},
+    {"key": "-1 0", "x": -1, "y": 0, "terrain": "plains"},
+    {"key": "1 0", "x": 1, "y": 0, "terrain": "plains"},
+    {"key": "0 -1", "x": 0, "y": -1, "terrain": "forest"},
+    {"key": "-1 -1", "x": -1, "y": -1, "terrain": "swamp"},
+    {"key": "0 1", "x": 0, "y": 1, "terrain": "hills"},
+    {"key": "-1 1", "x": -1, "y": 1, "terrain": "mountain"},
   ]
 };
 
 function hexReducer(state = initialState, action) {
   switch (action.type) {
+    case "ADD_HEX":
+      console.log("received ADD_HEX action");
+      console.log("action content: " + JSON.stringify(action));
+      //return { ...state, {"key": action.x + " " + action.y, "x": action.x, "y": action.y, "terrain": action.terrain  }}
+      return Object.assign({}, state, {
+        hexes: [
+          ...state.hexes,
+          {
+            "key": action.x + " " + action.y, "x": action.x, "y": action.y, "terrain": action.terrain
+          }
+        ]
+      })
+      //return state
+      break
     default:
       return state
   }
 }
 
 const rootReducer = combineReducers({
-  hex: hexReducer,
+  hexes: hexReducer,
   form: formReducer
 });
 
 const store = createStore(rootReducer);
-
-/*function reducer() {
-  return {
-    hexes: [
-      {"x": 0, "y": 0, "terrain": "plains"},
-      {"x": -1, "y": 0, "terrain": "plains"},
-      {"x": 1, "y": 0, "terrain": "plains"},
-      {"x": 0, "y": -1, "terrain": "forest"},
-      {"x": -1, "y": -1, "terrain": "swamp"},
-      {"x": 0, "y": 1, "terrain": "hills"},
-      {"x": -1, "y": 1, "terrain": "mountain"},
-    ]
-  };
-}
-
-const store = createStore(reducer);*/
 
 ReactDOM.render(
   <Provider store={store}>
