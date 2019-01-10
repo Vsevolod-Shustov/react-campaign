@@ -3,19 +3,61 @@ import './App.css';
 import Hexmap from './hexmap/Hexmap.js';
 import HexEditMenu from './hexeditmenu/HexEditMenu.js';
 import { connect } from 'react-redux';
+import { SubmissionError } from 'redux-form'
 
-class App extends Component {
+class App extends Component {  
+  constructor(props) {
+    super(props);
+    this.dispatchAction = this.dispatchAction.bind(this);
+  }
+  
+  dispatchAction(values) {
+      let action = {
+          type: values.action,
+          "x": values.x,
+          "y": values.y,
+          "terrain": values.terrain
+        };
+      console.log("action: " + JSON.stringify(action));
+      this.props.dispatch(action);
+    }
+    
   handleSubmit = (values) => {
     console.log("values: " + JSON.stringify(values));
-    let action = {
-      type: values.action,
-      "x": values.x,
-      "y": values.y,
-      "terrain": values.terrain
-    };
-    console.log("action: " + JSON.stringify(action));
-    this.props.dispatch(action);
+
+    function validateX(values) {
+      console.log("values: " + JSON.stringify(values));
+      console.log("x: " + values.x);
+      console.log("parsed x: " + parseInt(values.x));
+      if (!values.x || !parseInt(values.x)) {
+        throw new SubmissionError({
+          x: 'must be a number',
+          _error: 'error'
+        })
+      } else {
+        return true
+      }
+    }
+    
+    function validateY(values) {
+      if (!values.y || !parseInt(values.y)) {
+        throw new SubmissionError({
+          y: 'must be a number',
+          _error: 'error'
+        })
+      }else {
+        return true
+      }
+    }
+    
+    if (!validateX(values) || !validateY(values)) {
+      //alert("please type coordinates");
+
+    } else {
+      this.dispatchAction(values);
+    }
   }
+  
   render() {
     return (
       <div id="app">

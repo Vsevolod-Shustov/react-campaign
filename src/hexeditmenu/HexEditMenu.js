@@ -7,14 +7,35 @@ class HexEditMenu extends Component {
     this.props.initialize({ terrain: 'plains' });
   }
   
+  renderField = ({ input, label, type, meta: { touched, error } }) => (
+      <div>
+        <input {...input} placeholder={label} type={type} className="form-control" />
+        {touched && error && <span className="error">{error}</span>}
+      </div>
+  )
+
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, error } = this.props;
     return (
       <div className="HexEditMenu">
         <div className="form-horizontal" id="hex-edit-form">
-          <Field className="form-control" name="x" component="input" type="number" placeholder="x"/>
+          {/*<Field className="form-control" name="x" component="input" type="number" placeholder="x"/>
           
-          <Field className="form-control" name="y" component="input" type="number" placeholder="y"/>
+          <Field className="form-control" name="y" component="input" type="number" placeholder="y"/>*/}
+          
+          <Field
+            name="x"
+            type="number"
+            component={this.renderField}
+            placeholder="x"
+          />
+          
+          <Field
+            name="y"
+            type="number"
+            component={this.renderField}
+            placeholder="y"
+          />
           
           <Field className="form-control" name="terrain" component="select">
             <option value="plains">Plains</option>
@@ -24,6 +45,8 @@ class HexEditMenu extends Component {
             <option value="mountain">Mountain</option>
           </Field>
  
+          {error && <div><span className="error"><strong>{error}</strong></span></div>}
+          
           <button type="submit" id="add-hex-btn" className="btn btn-primary"
             onClick={handleSubmit(values => 
               this.props.onSubmit({ 

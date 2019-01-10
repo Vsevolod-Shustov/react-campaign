@@ -32,3 +32,8 @@ input[type="number"] {
 #hex-edit-form button {
   outline:none;
 }
+
+.error {
+  color:red;
+  font-size:12px;
+}
