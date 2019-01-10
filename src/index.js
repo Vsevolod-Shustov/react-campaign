@@ -35,8 +35,12 @@ function hexReducer(state = initialState, action) {
           }
         ]
       })
-      //return state
-      break
+    case "DELETE_HEX":
+      console.log("received DELETE_HEX action");
+      console.log("action content: " + JSON.stringify(action));
+      //return { ...state, {"key": action.x + " " + action.y, "x": action.x, "y": action.y, "terrain": action.terrain  }}
+      let delete_key = action.x + " " + action.y;
+      return {hexes: state.hexes.filter(({key}) => key !== delete_key)}
     default:
       return state
   }

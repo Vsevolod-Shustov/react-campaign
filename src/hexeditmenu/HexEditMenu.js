@@ -23,23 +23,7 @@ class HexEditMenu extends Component {
             <option value="swamp">Swamp</option>
             <option value="mountain">Mountain</option>
           </Field>
-          
-          <button onClick={handleSubmit(values => 
-            this.props.onSubmit({ 
-              ...values,
-              pill: 'blue'
-            }))}>Blue Pill</button>
-            
-          <button onClick={handleSubmit(values => 
-            this.props.onSubmit({ 
-              ...values,
-              pill: 'red'
-            }))}>Red Pill</button>
-          
-          
-          
-          
-            
+ 
           <button type="submit" id="add-hex-btn" className="btn btn-primary"
             onClick={handleSubmit(values => 
               this.props.onSubmit({ 
