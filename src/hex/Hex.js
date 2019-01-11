@@ -28,6 +28,12 @@ class Hex extends Component {
       "mountain": mountain,
       "swamp": swamp
     }
+    this.clickHex = this.clickHex.bind(this);
+  }
+  
+  clickHex(e) {
+    e.preventDefault();
+    console.log(this.props.x + " " + this.props.y);
   }
   
   positionHex(x, y, hexWidth, hexHeight, hexVerticalOffset, hexMargin) {
@@ -54,7 +60,7 @@ class Hex extends Component {
       {"x":0, "y":(hexHeight-hexSideLength)/2}
     ];
   }*/
-
+  
   render() {
     //hex graphics dimensions
     
@@ -66,6 +72,7 @@ class Hex extends Component {
     return (
       <g
         className={"hex " + this.props.terrain}
+        onClick={this.clickHex}
         transform={"translate(" + this.xPos + "," + this.yPos + ")"}
       >
         <polygon className="hexagon"

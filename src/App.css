@@ -12,3 +12,7 @@ body {
   top:8px;
   right:8px;
 }
+
+#app {
+  user-select: none;
+}

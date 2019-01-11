@@ -18,21 +18,21 @@ class App extends Component {
           "y": values.y,
           "terrain": values.terrain
         };
-      console.log("action: " + JSON.stringify(action));
+      console.log("dispatching action: " + JSON.stringify(action));
       this.props.dispatch(action);
     }
     
   handleSubmit = (values) => {
-    console.log("values: " + JSON.stringify(values));
+    //console.log("values: " + JSON.stringify(values));
 
     function validateX(values) {
       console.log("values: " + JSON.stringify(values));
       console.log("x: " + values.x);
       console.log("parsed x: " + parseInt(values.x));
-      if (!values.x || !parseInt(values.x)) {
+      if (!values.x || (!parseInt(values.x) && parseInt(values.x) !== 0)) {
+        console.log("something's wrong with X");
         throw new SubmissionError({
-          x: 'must be a number',
-          _error: 'error'
+          x: 'must be a number'
         })
       } else {
         return true
@@ -40,10 +40,10 @@ class App extends Component {
     }
     
     function validateY(values) {
-      if (!values.y || !parseInt(values.y)) {
+      if (!values.y || (!parseInt(values.y) && parseInt(values.y) !== 0)) {
+        console.log("something's wrong with y");
         throw new SubmissionError({
-          y: 'must be a number',
-          _error: 'error'
+          y: 'must be a number'
         })
       }else {
         return true
@@ -51,7 +51,6 @@ class App extends Component {
     }
     
     if (!validateX(values) || !validateY(values)) {
-      //alert("please type coordinates");
 
     } else {
       this.dispatchAction(values);

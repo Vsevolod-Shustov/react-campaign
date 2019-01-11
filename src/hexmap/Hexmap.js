@@ -21,6 +21,7 @@ class Hexmap extends Component {
       ]
     };
     this.updateDimensions = this.updateDimensions.bind(this);
+    
   }
    
   updateDimensions() {
@@ -62,13 +63,7 @@ class Hexmap extends Component {
     mapholder.setAttribute('transform', 'translate('+xmove+','+ymove+')');
   }
   
-  addHex() {
   
-  }
-  
-  removeHex() {
-  
-  }
   
   componentWillMount() {
     this.updateDimensions();
@@ -122,6 +117,8 @@ function mapStateToProps(state) {
     hexes: state.hexes.hexes
   };
 }
+
+
 
 //export default Hexmap;
 export default connect(mapStateToProps)(Hexmap);
