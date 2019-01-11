@@ -69,7 +69,7 @@ class Hex extends Component {
       <g
         className={"hex " + this.props.terrain}
         transform={"translate(" + this.xPos + "," + this.yPos + ")"}
-        onClick={() => this.props.onClick(this.props.hexkey)}
+        onClick={(event) => this.props.onClick(event, this.props.hexkey)}
       >
         <polygon className="hexagon"
           points = {

@@ -49,10 +49,6 @@ class Hexmap extends Component {
     g.attr("transform", "translate("+mapXpos+","+mapYpos+")");
   }
   
-  dragstart() {
-    d3.event.sourceEvent.stopPropagation();
-  }
-  
   dragmove() {
     let mapholder = document.getElementById("map-holder-g");
     //get transform
@@ -78,7 +74,6 @@ class Hexmap extends Component {
     this.positionMap();
     
     let drag = d3.drag()
-      .on("start", this.dragstart)
       .on("drag", this.dragmove);
     d3.select("#map-holder-g")
       .call(drag);
@@ -92,7 +87,8 @@ class Hexmap extends Component {
     window.removeEventListener("resize", this.updateDimensions);
   }
   
-  clickHex(key) {
+  clickHex(event, key) {
+    //event.stopPropagation();
     console.log("key is " + key);
     let action = {
       type: "HEX_CLICKED",
