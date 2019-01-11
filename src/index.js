@@ -26,7 +26,17 @@ const uiInitialState = {
 }
 
 function uiReducer (state=uiInitialState, action) {
-  return state
+  switch (action.type) {
+    case "HEX_CLICKED":
+      console.log("received HEX_CLICKED action");
+      console.log("action content: " + JSON.stringify(action));
+      //return action.key.toString();
+      return Object.assign({}, state, {
+        selectedHexKey: action.key.toString()
+        })
+    default:
+      return state
+  }
 }
 
 function hexReducer(state = hexesInitialState, action) {

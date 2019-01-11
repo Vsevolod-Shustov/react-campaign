@@ -21,7 +21,7 @@ class Hexmap extends Component {
       ]
     };
     this.updateDimensions = this.updateDimensions.bind(this);
-    
+    this.clickHex = this.clickHex.bind(this);
   }
    
   updateDimensions() {
@@ -49,6 +49,10 @@ class Hexmap extends Component {
     g.attr("transform", "translate("+mapXpos+","+mapYpos+")");
   }
   
+  dragstart() {
+    d3.event.sourceEvent.stopPropagation();
+  }
+  
   dragmove() {
     let mapholder = document.getElementById("map-holder-g");
     //get transform
@@ -73,7 +77,9 @@ class Hexmap extends Component {
     window.addEventListener("resize", this.updateDimensions);
     this.positionMap();
     
-    let drag = d3.drag().on("drag", this.dragmove);
+    let drag = d3.drag()
+      .on("start", this.dragstart)
+      .on("drag", this.dragmove);
     d3.select("#map-holder-g")
       .call(drag);
   }
@@ -86,6 +92,16 @@ class Hexmap extends Component {
     window.removeEventListener("resize", this.updateDimensions);
   }
   
+  clickHex(key) {
+    console.log("key is " + key);
+    let action = {
+      type: "HEX_CLICKED",
+      "key": key
+    };
+    console.log("dispatching action: " + JSON.stringify(action));
+    this.props.dispatch(action);
+  }
+  
   render() {
     if(this.props.hexes && this.props.hexes.map){
       var renderedHexes = this.props.hexes.map((hex) =>
@@ -94,6 +110,8 @@ class Hexmap extends Component {
           y={hex.y}
           terrain={hex.terrain}
           key={hex.key}
+          hexkey={hex.key}
+          onClick={this.clickHex}
         />);
     } else {
       console.log("no state found by hexmap");

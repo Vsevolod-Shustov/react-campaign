@@ -28,13 +28,9 @@ class Hex extends Component {
       "mountain": mountain,
       "swamp": swamp
     }
-    this.clickHex = this.clickHex.bind(this);
   }
   
-  clickHex(e) {
-    e.preventDefault();
-    console.log(this.props.x + " " + this.props.y);
-  }
+  
   
   positionHex(x, y, hexWidth, hexHeight, hexVerticalOffset, hexMargin) {
     let xPos = x*hexWidth-hexWidth/2+hexMargin*x;
@@ -72,8 +68,8 @@ class Hex extends Component {
     return (
       <g
         className={"hex " + this.props.terrain}
-        onClick={this.clickHex}
         transform={"translate(" + this.xPos + "," + this.yPos + ")"}
+        onClick={() => this.props.onClick(this.props.hexkey)}
       >
         <polygon className="hexagon"
           points = {
