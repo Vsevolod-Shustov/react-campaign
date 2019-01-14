@@ -22,7 +22,6 @@ function uiReducer (state=uiInitialState, action) {
     case "HEX_CLICKED":
       console.log("received HEX_CLICKED action");
       console.log("action content: " + JSON.stringify(action));
-      //return action.key.toString();
       return Object.assign({}, state, {
         selectedHexKey: action.key.toString()
         })
@@ -32,6 +31,7 @@ function uiReducer (state=uiInitialState, action) {
 }
 
 function hexReducer(state = hexesInitialState, action) {
+  const localstorageKey='globalMap';
   switch (action.type) {
     case "ADD_HEX":
       console.log("received ADD_HEX action");
@@ -60,6 +60,33 @@ function hexReducer(state = hexesInitialState, action) {
         let delete_key = action.x + " " + action.y;
         return {hexes: state.hexes.filter(({key}) => key !== delete_key)}
       }
+    case "SAVE_MAP":
+      console.log("received SAVE_MAP action");
+      console.log("action content: " + JSON.stringify(action));
+      localStorage[localstorageKey] = JSON.stringify(state);
+      return state
+    case "LOAD_MAP":
+      console.log("received LOAD_MAP action");
+      console.log("action content: " + JSON.stringify(action));
+      if(localStorage[localstorageKey]) {
+        return {hexes: JSON.parse(localStorage[localstorageKey]).hexes}
+      } else {
+        console.log('no save found');
+        return state
+      }
+    case "CLEAR_MAP":
+      console.log("received CLEAR_MAP action");
+      console.log("action content: " + JSON.stringify(action));
+      return {hexes: []}
+    case "CLEAR_SAVE":
+      console.log("received CLEAR_SAVE action");
+      console.log("action content: " + JSON.stringify(action));
+      if(localStorage[localstorageKey]) {
+        localStorage.removeItem(localstorageKey);
+      } else {
+        console.log('no save found');
+      }
+      return state
     default:
       return state
   }

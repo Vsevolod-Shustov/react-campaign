@@ -125,8 +125,8 @@ class Hexmap extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log("mapping state to props...");
-  console.log("state is " + JSON.stringify(state));
+  console.log("mapping state to props");
+  //console.log("state is " + JSON.stringify(state));
   return {
     hexes: state.hexes.hexes
   };

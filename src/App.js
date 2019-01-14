@@ -50,8 +50,10 @@ class App extends Component {
       }
     }
     
-    if (!validateX(values) || !validateY(values)) {
-
+    if (values.action==="ADD_HEX" || values.action==="DELETE_HEX") {
+      if (validateX(values) && validateY(values)) {
+        this.dispatchAction(values);
+      }
     } else {
       this.dispatchAction(values);
     }
