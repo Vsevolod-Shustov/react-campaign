@@ -132,7 +132,5 @@ function mapStateToProps(state) {
   };
 }
 
-
-
 //export default Hexmap;
 export default connect(mapStateToProps)(Hexmap);

@@ -5,7 +5,6 @@ import forest from './forest.svg';
 import hills from './hills.svg';
 import mountain from './mountain.svg';
 import swamp from './swamp.svg';
-//import * as d3 from 'd3';
 
 class Hex extends Component {
   constructor(props) {
@@ -43,26 +42,7 @@ class Hex extends Component {
     this.yPos = yPos;
   }
   
-  
-  
-  /*drawHex(x, y, hexWidth, hexHeight, hexSideLength, hexMargin) {
-    //hex polygon points
-    let hexagon = [
-      {"x":hexWidth/2, "y":0},
-      {"x":hexWidth, "y":(hexHeight-hexSideLength)/2},
-      {"x":hexWidth, "y":hexHeight/2+(hexHeight-hexSideLength)/2},
-      {"x":hexWidth/2, "y":hexHeight},
-      {"x":0, "y":hexHeight/2+(hexHeight-hexSideLength)/2},
-      {"x":0, "y":(hexHeight-hexSideLength)/2}
-    ];
-  }*/
-  
-  render() {
-    //hex graphics dimensions
-    
-    
-    //this.drawHex(this.props.x, this.props.y, this.hexWidth, this.hexMargin);
-    
+  render() {    
     this.positionHex(this.props.x, this.props.y, this.hexWidth, this.hexHeight, this.hexVerticalOffset, this.hexMargin);
     
     return (

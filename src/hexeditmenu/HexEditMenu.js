@@ -5,7 +5,7 @@ import './HexEditMenu.css';
 
 class HexEditMenu extends Component {
   componentWillMount () {
-    //this.props.initialize({ terrain: 'plains' });
+    
   }
   
   renderField = ({ input, placeholder, label, type, meta: { touched, error } }) => (
@@ -97,22 +97,11 @@ class HexEditMenu extends Component {
   }
 }
 
-//export default HexEditMenu;
-
 // Decorate the form component
 HexEditMenu = reduxForm({
   form: 'hexeditform'
 })(HexEditMenu);
 
-//export default HexEditMenu;
-/*export default connect(state => ({
-  initialValues: {
-    x: state.hexes.hexes.find(hex => hex.key === state.ui.selectedHexKey).x.toString() || "0",
-    y: state.hexes.hexes.find(hex => hex.key === state.ui.selectedHexKey).y.toString() || "0",
-    terrain: state.hexes.hexes.find(hex => hex.key === state.ui.selectedHexKey).terrain || "plains",
-  },
-  enableReinitialize: true,
-}))(HexEditMenu);*/
 
 export default connect(function(state){
   let initialHex = state.hexes.hexes.find(hex => hex.key === state.ui.selectedHexKey);
@@ -135,7 +124,3 @@ export default connect(function(state){
     enableReinitialize: true,
   }
 })(HexEditMenu);
-
-/*export default HexEditMenu({
-  form: 'hexeditform'  // a unique identifier for this form
-})(HexEditMenu)*/
