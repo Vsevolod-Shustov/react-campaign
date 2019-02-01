@@ -9,16 +9,7 @@ class Hexmap extends Component {
     super(props);
     this.state = {
       svgWidth: 0,
-      svgHeight: 0,
-      hexes: [
-      {"x": 0, "y": 0, "terrain": "plains"},
-      {"x": -1, "y": 0, "terrain": "plains"},
-      {"x": 1, "y": 0, "terrain": "plains"},
-      {"x": 0, "y": -1, "terrain": "forest"},
-      {"x": -1, "y": -1, "terrain": "swamp"},
-      {"x": 0, "y": 1, "terrain": "hills"},
-      {"x": -1, "y": 1, "terrain": "mountain"},
-      ]
+      svgHeight: 0
     };
     this.updateDimensions = this.updateDimensions.bind(this);
     this.clickHex = this.clickHex.bind(this);
