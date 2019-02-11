@@ -1,10 +1,47 @@
 import React, { Component } from 'react';
-import './Hex.css';
+import styled from 'styled-components'
+//import './Hex.css';
 import plains from './plains.svg';
 import forest from './forest.svg';
 import hills from './hills.svg';
 import mountain from './mountain.svg';
 import swamp from './swamp.svg';
+
+const Polygon = styled.polygon`
+  stroke:black;
+  stroke-width:2;
+  fill:white;
+  .plains & {
+    fill:#e7f79c;
+  }
+  .forest & {
+    fill:#7aad43;
+  }
+  .hills & {
+    fill:#c3d263;
+  }
+  .mountain & {
+    fill:#b28000;
+  }
+  .swamp & {
+    fill:#addea5;
+  }
+`
+
+const G = styled.g`
+  :hover {
+    > ${Polygon} {
+      stroke:#0c0;
+    }
+  }
+  
+  text {
+    paint-order: stroke;
+    stroke: #fff;
+    stroke-width: 2px;
+  }
+`
+
 
 class Hex extends Component {
   constructor(props) {
@@ -46,12 +83,12 @@ class Hex extends Component {
     this.positionHex(this.props.x, this.props.y, this.hexWidth, this.hexHeight, this.hexVerticalOffset, this.hexMargin);
     
     return (
-      <g
+      <G
         className={"hex " + this.props.terrain}
         transform={"translate(" + this.xPos + "," + this.yPos + ")"}
         onClick={(event) => this.props.onClick(event, this.props.hexkey)}
       >
-        <polygon className="hexagon"
+        <Polygon className="hexagon"
           points = {
             this.hexWidth/2 + "," + 0 + " " +
             this.hexWidth + "," + (this.hexHeight-this.hexSideLength)/2 + " " +
@@ -61,11 +98,11 @@ class Hex extends Component {
             0 + "," + (this.hexHeight-this.hexSideLength)/2
           }
         >
-        </polygon>
+        </Polygon>
         <image href={this.terrains[this.props.terrain]} width={this.hexWidth} height={this.hexHeight} alt=""></image>
         <text x="75" y="20" dy=".35em" fill="#000" textAnchor="middle">{this.props.x} {this.props.y}</text>
         <text x="75" y="40" dy=".35em" fill="#000" textAnchor="middle">{this.props.terrain}</text>
-      </g>
+      </G>
     );
   }
 }
